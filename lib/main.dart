@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:http_server/controller/server.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Server serverObj = Server();
+  bool isServerOn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    //--
+
+    //--/
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('http Server'),
+      ),
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FutureBuilder(
+              future: serverObj.findIp(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Loading');
+                } else if (snapshot.hasData) {
+                  var ip = snapshot.data;
+                  return Text(
+                    'http://$ip:${serverObj.port}/',
+                    style: const TextStyle(fontSize: 22),
+                  );
+                } else {
+                  return const Text('IP Not Found');
+                }
+              },
+            ),
+            Switch(
+              value: isServerOn,
+              onChanged: (v) async {
+                setState(() {
+                  isServerOn = v;
+                });
+                if (isServerOn) {
+                  await serverObj.openServer();
+                } else {
+                  await serverObj.closeServer();
+                }
+              },
+            ),
+            const Text('''
+create:
+http://ip:port/student/create?name=MITHUN&dep=CSE
+            
+read:
+http://ip:port/student/read
+
+update:
+http://ip:port/student/update?id=UUID&name=MH&dep=CSE
+
+delete:
+http://ip:port/student/delete?id=UUID'''),
+          ],
+        ),
+      ),
+    );
+  }
+}
