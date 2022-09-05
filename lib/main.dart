@@ -68,16 +68,18 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             const Text('''
-create:
-http://ip:port/student/create?name=MITHUN&dep=CSE
+create: (POST)
+http://ip:port/student/create
+{"name":"Mithun", "dep":"cse"}
             
-read:
+read: (GET)
 http://ip:port/student/read
 
-update:
-http://ip:port/student/update?id=UUID&name=MH&dep=CSE
+update: (PATCH)
+http://ip:port/student/update?id=UUID
+{"name":"MH Mithun", "dep":"CSE"}
 
-delete:
+delete: (DELETE )
 http://ip:port/student/delete?id=UUID'''),
           ],
         ),

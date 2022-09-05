@@ -7,20 +7,6 @@ import 'package:uuid/uuid.dart';
 class StudentHandler {
   static List<Student> stu = [];
 
-  /*
-  create:
-  http://ip:port/student/create?name=MITHUN&dep=CSE
-            
-  read:
-  http://ip:port/student/read
-
-  update:
-  http://ip:port/student/update?id=UUID&name=MH&dep=CSE
-
-  delete:
-  http://ip:port/student/delete?id=UUID
-  */
-
   //create
   createStu(String name, String dep) {
     Student s = Student(id: const Uuid().v1(), name: name, dep: dep);

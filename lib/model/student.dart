@@ -9,7 +9,7 @@ class Student {
     Map map = {
       'id': id,
       'name': name,
-      'department': dep,
+      'dep': dep,
     };
     return map;
   }
